@@ -1,0 +1,67 @@
+
+<div class="container">
+    <mat-card class="example-card" appearance="outlined">
+        <mat-card-header class="header-row">
+            <mat-card-title>Elenco Veicoli</mat-card-title>
+            <button mat-raised-button color="primary" >Creazione nuovo Veicolo</button>
+        </mat-card-header>
+        <mat-divider style="margin-top: 20px;"></mat-divider>
+        <mat-card-content>
+            <div class="search-row">
+                <mat-form-field>
+                    <mat-label>Tipo</mat-label>
+                   <mat-select name="tipo"
+                            [(ngModel)]="tipo"
+                            (selectionChange)="onTipoChange($event.value)">
+
+                    @for (tipoV of tipoVeicoli; track tipoV.id) {
+                        <mat-option [value]="tipoV">{{ tipoV.nome }}</mat-option>
+                    }
+
+                    </mat-select>
+                    @if (tipo){
+                    <button mat-icon-button matSuffix (click)="tipo = null" matTooltip="Cancella">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    }
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Categoria</mat-label>
+                    <mat-select name='categ' [(ngModel)]="categ" [disabled]="!tipo">
+                        @for (cat of categories; track cat.id ){
+                        <mat-option value={{cat.id}}>{{cat.nome}}</mat-option>
+                        }
+
+                    </mat-select>
+                    @if (categ){
+                    <button mat-icon-button matSuffix (click)="categ = null" matTooltip="Cancella">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    }
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Tipo Alimentazione</mat-label>
+                    <mat-select name='alim' [(ngModel)]="alim" [disabled]="!tipo">
+                        @for (al of alimentazione; track al.id ){
+                        <mat-option value={{al.id}}>{{al.nome}}</mat-option>
+                        }
+
+                    </mat-select>
+                    @if (categ){
+                    <button mat-icon-button matSuffix (click)="alim = null" matTooltip="Cancella">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    }
+                </mat-form-field>
+
+                <span class="spacer"></span>
+                <button mat-raised-button color="accent" (click)="search()"
+                    matTooltip="ricerca con criteri">Cerca</button>
+            </div>
+            
+
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -12,20 +12,26 @@
       <span>Profile</span>
     </button>
   </mat-menu>
-  <span>Dashboard Standard</span>
-  <span class="example-spacer"></span>
+  <span>Vendita veicoli</span>
+  
 
 
- @if (auth.isAutentificated()){
-  <button mat-icon-button
-        class="example-icon"
-        aria-label="Home page"
-        matTooltip="Home Page"
+  @if (auth.grant().userId) {
+
+    <div class="user-info">
+      <span class="welcome">Ciao {{ auth.grant().userId }}</span>
+    </div>
+  }
+    <span class="example-spacer"></span>
+  
+    <button mat-icon-button
+        class="example-icon" aria-label="Home page" matTooltip="Home Page"
         [routerLink]="['/dash','home']">
 
   <mat-icon>home</mat-icon>
 </button>
-
+  
+@if (auth.grant().isLogged){
     <div class="icon-with-label" 
         matTooltip="Gestione del Carrello" 
         [routerLink]="['/dash','cart']">
@@ -47,13 +53,11 @@
   </button>
 </mat-toolbar>
 <mat-drawer-container class="example-container">
-    <mat-drawer mode="side" [opened]=auth.isRoleAdmin()> 
+    <mat-drawer mode="side" [opened]=auth.isRoleAdmin() class="side-menu"> 
         <mat-list role="list">
             <mat-list-item role="listitem" routerLink="/dash/home" [routerLinkActive]="'active'">Home</mat-list-item>
-            @if (auth.isAutentificated()){
-            <mat-list-item role="listitem" routerLink="/dash/cart" [routerLinkActive]="'active'">Carello</mat-list-item>
-            }
-            @if (auth.isRoleAdmin()){
+        @if (auth.grant().isAdmin){
+            <mat-list-item role="listitem" routerLink="/dash/veicoli" [routerLinkActive]="'active'">Gestione veicoli</mat-list-item>
             <mat-list-item role="listitem" routerLink="/dash/user" [routerLinkActive]="'active'">Gestione utente</mat-list-item>
         }    
         </mat-list>

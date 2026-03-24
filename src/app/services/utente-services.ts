@@ -16,6 +16,10 @@ export class UtenteServices {
     return this.http.post(this.url + "create", body);
   }
 
+  update(body:{}){
+    return this.http.put(this.url + "update", body);
+  }
+
 
 
 }

@@ -6,5 +6,8 @@ export const authAutentificatedGuard: CanActivateFn = (route, state) => {
   const authServices = inject(AuthServices);
   const router = inject(Router);
 
-  return authServices.isAutentificated();
+  if (authServices.isAutentificated()) {
+    return true;
+  }
+  return router.parseUrl('/dash/home');
 };

@@ -12,18 +12,35 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCardModule } from '@angular/material/card';
+import {MatSelectModule} from '@angular/material/select';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
-import { Login } from './componenti/login/login';
-import { Register } from './componenti/register/register';
+
 import { Dashboard } from './componenti/dashboard/dashboard';
 import { Home } from './componenti/home/home';
 import { GestioneUtente } from './componenti/gestione-utente/gestione-utente';
 import { Chart } from './componenti/chart/chart';
+import { LoginDialog } from './dialogs/login-dialog/login-dialog';
+import { RegistrazioneDialog } from './dialogs/registrazione-dialog/registrazione-dialog';
+import { VeicoliManager } from './componenti/veicoli-manager/veicoli-manager';
 
 @NgModule({
-  declarations: [App, Login, Register, Dashboard, Home, GestioneUtente, Chart],
+  declarations: [
+    App,
+    Dashboard,
+    Home,
+    GestioneUtente,
+    Chart,
+    LoginDialog,
+    RegistrazioneDialog,
+    VeicoliManager,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -38,6 +55,12 @@ import { Chart } from './componenti/chart/chart';
     MatIconModule,
     MatTooltipModule,
     MatMenuModule,
+    MatDialogModule,
+    MatRadioModule,
+    MatCardModule,
+    MatSelectModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     provideHttpClient(withFetch()),
