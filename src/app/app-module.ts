@@ -15,9 +15,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
-import {MatSelectModule} from '@angular/material/select';
-import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
@@ -29,6 +29,7 @@ import { Chart } from './componenti/chart/chart';
 import { LoginDialog } from './dialogs/login-dialog/login-dialog';
 import { RegistrazioneDialog } from './dialogs/registrazione-dialog/registrazione-dialog';
 import { VeicoliManager } from './componenti/veicoli-manager/veicoli-manager';
+import { ChangePassword } from './dialogs/change-password/change-password';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { VeicoliManager } from './componenti/veicoli-manager/veicoli-manager';
     LoginDialog,
     RegistrazioneDialog,
     VeicoliManager,
+    ChangePassword,
   ],
   imports: [
     BrowserModule,
@@ -60,7 +62,7 @@ import { VeicoliManager } from './componenti/veicoli-manager/veicoli-manager';
     MatCardModule,
     MatSelectModule,
     MatPaginatorModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
   ],
   providers: [
     provideHttpClient(withFetch()),

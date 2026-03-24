@@ -52,10 +52,10 @@ export class RegistrazioneDialog implements OnInit {
         nome: this.account().nome,
         cognome: this.account().cognome,
         email: this.account().email,
-        sesso: this.account().sesso,
+        sesso: this.account().sesso ? 'M' : 'F',
         telefono: this.account().telefono,
         via: this.account().via,
-        comune: this.account().commune,
+        comune: this.account().comune,
         cap: this.account().cap,
         userName: this.account().userName
       })
@@ -69,7 +69,7 @@ export class RegistrazioneDialog implements OnInit {
 
   onSubmitUpdate() {
     this.msg.set('');
-    const updateBody: any = { id: this.account().id };
+    const updateBody: any = { userName: this.account().userName};
 
     if (this.updateForm.controls['nome'].dirty)
       updateBody.nome = this.updateForm.value.nome;
@@ -94,9 +94,6 @@ export class RegistrazioneDialog implements OnInit {
 
     if (this.updateForm.controls['cap'].dirty)
       updateBody.cap = this.updateForm.value.cap;
-
-    if (this.updateForm.controls['userName'].dirty)
-      updateBody.userName = this.updateForm.value.userName;
 
     console.log(updateBody);
 

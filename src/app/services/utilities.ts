@@ -33,7 +33,7 @@ export class Utilities {
 
     return this.dialog.open<T, D, R>(component, {
       ...baseConfig,
-      ...config   // se vuoi sovrascrivere qualcosa di specifico
+      ...config   // per sovrascrivere qualcosa di specifico
     });
   }
 

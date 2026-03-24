@@ -21,9 +21,7 @@ constructor(@Inject(PLATFORM_ID) private platformId: Object) {
       const isLogged = localStorage.getItem("isLogged") === '1';
       const isAdmin = localStorage.getItem("isAdmin") === '1';
       const userId = localStorage.getItem("userId");
-      const userName = localStorage.getItem("userName");
-      const isValidate = localStorage.getItem("isValidate") ;
-
+     
       this.grant.set({
         isAdmin,
         isLogged,
@@ -87,9 +85,6 @@ constructor(@Inject(PLATFORM_ID) private platformId: Object) {
   }
 
   isRoleAdmin() {
-    if (isPlatformBrowser(this.platformId)) {
-      return this.grant().isAdmin;
-    }
-    return false;
+    return this.grant().isAdmin;
   }
 }

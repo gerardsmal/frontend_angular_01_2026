@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -19,7 +19,13 @@ export class UtenteServices {
   update(body:{}){
     return this.http.put(this.url + "update", body);
   }
+  changePwd(body:{}){
+    return this.http.put(this.url + "changePwd", body);
+  }
 
-
+  findByUserName(id:string){
+    const params = new HttpParams().set("id", id);
+    return this.http.get(this.url + "findByUserName", {params});
+  }
 
 }
