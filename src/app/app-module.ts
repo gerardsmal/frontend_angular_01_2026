@@ -18,6 +18,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
@@ -30,6 +33,10 @@ import { LoginDialog } from './dialogs/login-dialog/login-dialog';
 import { RegistrazioneDialog } from './dialogs/registrazione-dialog/registrazione-dialog';
 import { VeicoliManager } from './componenti/veicoli-manager/veicoli-manager';
 import { ChangePassword } from './dialogs/change-password/change-password';
+import { VeicoliDialog } from './dialogs/veicoli-dialog/veicoli-dialog';
+import { MacchinaDialog } from './dialogs/macchina-dialog/macchina-dialog';
+import { SceltaUpdateDialog } from './dialogs/scelta-update-dialog/scelta-update-dialog';
+import { UploadDialog } from './dialogs/upload-dialog/upload-dialog';
 
 @NgModule({
   declarations: [
@@ -42,6 +49,10 @@ import { ChangePassword } from './dialogs/change-password/change-password';
     RegistrazioneDialog,
     VeicoliManager,
     ChangePassword,
+    VeicoliDialog,
+    MacchinaDialog,
+    SceltaUpdateDialog,
+    UploadDialog,
   ],
   imports: [
     BrowserModule,
@@ -63,6 +74,9 @@ import { ChangePassword } from './dialogs/change-password/change-password';
     MatSelectModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    MatBadgeModule,
+    MatButtonToggleModule,
+    MatExpansionModule,
   ],
   providers: [
     provideHttpClient(withFetch()),

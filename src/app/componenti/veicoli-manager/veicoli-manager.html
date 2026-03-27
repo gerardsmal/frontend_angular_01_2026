@@ -3,8 +3,19 @@
     <mat-card class="example-card" appearance="outlined">
         <mat-card-header class="header-row">
             <mat-card-title>Elenco Veicoli</mat-card-title>
-            <button mat-raised-button color="primary" >Creazione nuovo Veicolo</button>
-        </mat-card-header>
+            <mat-form-field>
+                    <mat-label>Create veicolo</mat-label>
+                    <mat-select name="create"
+                            [(ngModel)]="tipoCreate"
+                            (selectionChange)="onCreateVeicolo()">
+                        @for (tipoV of tipoVeicoli; track tipoV.id) {
+                            <mat-option [value]="tipoV">{{ tipoV.nome }}</mat-option>
+                        }
+
+                    </mat-select>
+                </mat-form-field>
+            <!-- <button mat-raised-button color="primary" >Creazione nuovo Veicolo</button> -->
+        </mat-card-header>    
         <mat-divider style="margin-top: 20px;"></mat-divider>
         <mat-card-content>
             <div class="search-row">
@@ -89,11 +100,6 @@
                     </button>
                     }
                 </mat-form-field>
-                <!--
-                <span class="spacer"></span>
-                <button mat-raised-button color="accent" (click)="search()"
-                    matTooltip="ricerca con criteri">Cerca</button>
-                    -->
             </div>
                  <table class="table table-stripped ">
                     <thead>
@@ -107,7 +113,7 @@
                     </thead>
                     <tbody>
                     @for (ve of veicoli; track ve.id) {
-                        <tr>
+                        <tr (click)="onSelected(ve)" class="clickable-row">
                             <td>
                                 <img [src]="ve.image" style="max-width: 80px;">
                             </td>
