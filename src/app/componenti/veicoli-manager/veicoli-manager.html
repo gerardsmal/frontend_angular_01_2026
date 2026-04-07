@@ -115,7 +115,11 @@
                     @for (ve of veicoli; track ve.id) {
                         <tr (click)="onSelected(ve)" class="clickable-row">
                             <td>
+                            @if(ve.image){    
                                 <img [src]="ve.image" style="max-width: 80px;">
+                            } @else {
+                                <img src="no_image.png" style="max-width: 80px;">
+                            }
                             </td>
                             <td>{{ve.tipoVeicolo.nome}}</td>
                             <td>{{ve.modello}}</td>

@@ -1,18 +1,20 @@
 import { Component, Inject, inject, OnInit, signal } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MotoServices } from '../../services/moto-services';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AttributiServices } from '../../services/attributi-services';
-import { MacchinaServices } from '../../services/macchina-services';
+
+
 
 @Component({
-  selector: 'app-macchina-dialog',
+  selector: 'app-moto-dialog',
   standalone: false,
-  templateUrl: './macchina-dialog.html',
-  styleUrl: './macchina-dialog.css',
+  templateUrl: './moto-dialog.html',
+  styleUrl: './moto-dialog.css',
 })
-export class MacchinaDialog implements OnInit {
+export class MotoDialog implements OnInit {
   mod: any = signal("");
-  macchina: any = signal<any>(null);
+  moto: any = signal<any>(null);
   readonly dialog = inject(MatDialog);
 
   tipoVeicolo: any;
@@ -20,17 +22,16 @@ export class MacchinaDialog implements OnInit {
   categories = signal<any[]>([]);
   msg = signal("")
 
-
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
-    private dialogRef: MatDialogRef<MacchinaDialog>,
+    private dialogRef: MatDialogRef<MotoDialog>,
     private attributiS: AttributiServices,
-    private macchinaS: MacchinaServices
+    private macchinaS: MotoServices
   ) {
     if (data) {
       this.tipoVeicolo = data.tipoVeicolo;
       this.mod.set(data.mod);
-      this.macchina.set(data.veicolo);
+      this.moto.set(data.veicolo);
       console.log(this.tipoVeicolo);
     }
   }
@@ -41,8 +42,7 @@ export class MacchinaDialog implements OnInit {
     alim: new FormControl(null, Validators.required),
     colore: new FormControl(null, Validators.required),
     marca: new FormControl(null, Validators.required),
-    ruote: new FormControl(4, Validators.required),
-    porte: new FormControl(5, Validators.required),
+    ruote: new FormControl(2, Validators.required),
     targa: new FormControl(null, Validators.required),
     anno: new FormControl(null, Validators.required),
     cc: new FormControl(null, Validators.required),
@@ -73,20 +73,18 @@ export class MacchinaDialog implements OnInit {
     this.attributiS.listMarca();
     if (this.mod() == 'U') {
       this.updateForm.patchValue({
-        modello: this.macchina().modello,
-        categ: this.macchina().categoria.id,
-        alim: this.macchina().tipoAlimentazione.id,
-        colore: this.macchina().colore.id,
-        marca: this.macchina().marca.id,
-        ruote: this.macchina().numeroRuote,
-        porte: this.macchina().macchina.numeroPorte,
-        targa: this.macchina().macchina.targa,
-        anno: this.macchina().annoProduzione,
-        cc: this.macchina().macchina.cc,
-        prezzo: this.macchina().prezzo
+        modello: this.moto().modello,
+        categ: this.moto().categoria.id,
+        alim: this.moto().tipoAlimentazione.id,
+        colore: this.moto().colore.id,
+        marca: this.moto().marca.id,
+        ruote: this.moto().numeroRuote,
+        targa: this.moto().moto.targa,
+        anno: this.moto().annoProduzione,
+        cc: this.moto().moto.cc,
+        prezzo: this.moto().prezzo
       })
     }
-
 
   }
 
@@ -114,9 +112,7 @@ export class MacchinaDialog implements OnInit {
       colore: this.updateForm.value.colore,
       marca: this.updateForm.value.marca,
       prezzo: this.updateForm.value.prezzo,
-      numeroPorte: this.updateForm.value.porte,
       targa: this.updateForm.value.targa,
-
       cc: this.updateForm.value.cc
     }).subscribe({
       next: ((r: any) => {
@@ -131,7 +127,7 @@ export class MacchinaDialog implements OnInit {
   }
 
   onUpdate() {
-    const updateBody: any = { id: this.macchina().id }
+    const updateBody: any = { id: this.moto().id }
     if (this.updateForm.controls['ruote'].dirty)
       updateBody.numeroRuote = this.updateForm.value.ruote;
     if (this.updateForm.controls['modello'].dirty)
@@ -150,8 +146,6 @@ export class MacchinaDialog implements OnInit {
       updateBody.marca = this.updateForm.value.marca;
     if (this.updateForm.controls['prezzo'].dirty)
       updateBody.prezzo = this.updateForm.value.prezzo;
-    if (this.updateForm.controls['porte'].dirty)
-      updateBody.numeroPorte = this.updateForm.value.porte;
     if (this.updateForm.controls['targa'].dirty)
       updateBody.targa = this.updateForm.value.targa;
 
@@ -169,4 +163,6 @@ export class MacchinaDialog implements OnInit {
   remove() {
 
   }
+
+
 }

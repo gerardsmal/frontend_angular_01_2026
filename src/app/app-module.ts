@@ -20,7 +20,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
@@ -37,6 +37,8 @@ import { VeicoliDialog } from './dialogs/veicoli-dialog/veicoli-dialog';
 import { MacchinaDialog } from './dialogs/macchina-dialog/macchina-dialog';
 import { SceltaUpdateDialog } from './dialogs/scelta-update-dialog/scelta-update-dialog';
 import { UploadDialog } from './dialogs/upload-dialog/upload-dialog';
+import { MotoDialog } from './dialogs/moto-dialog/moto-dialog';
+import { BiciDialog } from './dialogs/bici-dialog/bici-dialog';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,9 @@ import { UploadDialog } from './dialogs/upload-dialog/upload-dialog';
     MacchinaDialog,
     SceltaUpdateDialog,
     UploadDialog,
+    MotoDialog,
+    BiciDialog,
+
   ],
   imports: [
     BrowserModule,

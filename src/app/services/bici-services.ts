@@ -1,14 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs';
 import { VeicoliServices } from './veicoli-services';
+import { tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MacchinaServices {
-
-  private url = "http://localhost:9090/rest/macchina/";
+export class BiciServices {
+ private url = "http://localhost:9090/rest/bici/";
 
   constructor(private http: HttpClient,
               private veicoliServices:VeicoliServices
@@ -24,5 +23,6 @@ export class MacchinaServices {
     return this.http.put(this.url + "update", body)
       .pipe(tap(() => this.veicoliServices.list()))
   }
+
 
 }

@@ -1,6 +1,5 @@
-<div>
 @if (mod() == 'U'){
-<h2 mat-dialog-title>Detaglio {{macchina.modello}} </h2>
+<h2 mat-dialog-title>Detaglio {{bici.modello}} </h2>
 } @else {
 <h2 mat-dialog-title>Creazione nuova macchina</h2>
 }
@@ -56,8 +55,8 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="small-field">
-                    <mat-label>Numero ruote</mat-label>
-                    <input matInput type="number" formControlName="ruote">
+                    <mat-label>Numero marce</mat-label>
+                    <input matInput type="number" formControlName="marce">
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="small-field">

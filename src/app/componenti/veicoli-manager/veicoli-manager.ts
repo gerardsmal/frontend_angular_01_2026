@@ -6,6 +6,7 @@ import { MacchinaDialog } from '../../dialogs/macchina-dialog/macchina-dialog';
 import { ComponentType } from '@angular/cdk/overlay';
 import { SceltaUpdateDialog } from '../../dialogs/scelta-update-dialog/scelta-update-dialog';
 import { UploadDialog } from '../../dialogs/upload-dialog/upload-dialog';
+import { MotoDialog } from '../../dialogs/moto-dialog/moto-dialog';
 
 @Component({
   selector: 'app-veicoli-manager',
@@ -23,11 +24,11 @@ export class VeicoliManager implements OnInit {
   categories: any;
   alimentazione: any;
 
-  tipoCreate:any = null;
+  tipoCreate: any = null;
 
   constructor(private attributiS: AttributiServices,
     private veivoliS: VeicoliServices,
-    private util:Utilities
+    private util: Utilities
   ) {
   }
   ngOnInit(): void {
@@ -77,7 +78,7 @@ export class VeicoliManager implements OnInit {
             console.log(r.error.msg);
           })
         });
-        this.search();
+      this.search();
     }
 
 
@@ -90,54 +91,76 @@ export class VeicoliManager implements OnInit {
 
   }
 
-  onCreateVeicolo(){
+  onCreateVeicolo() {
     let dialogComponent: ComponentType<any>
     if (this.tipoCreate.nome === 'macchina') dialogComponent = MacchinaDialog;
-    
-    let dialogRef = this.util.openDialog(dialogComponent, 
-    {
-      mod : 'C',
-      tipoVeicolo: this.tipoCreate,
-      veicolo:null
-    },
-    { width: '1100px',
-      maxWidth: '90vw',
-      height: 'auto',
-      maxHeight: '90v',
-      enterAnimationDuration: '500ms',
-      exitAnimationDuration: '500ms'},
+    if (this.tipoCreate.nome === 'moto') dialogComponent = MotoDialog;
+
+    let dialogRef = this.util.openDialog(dialogComponent,
+      {
+        mod: 'C',
+        tipoVeicolo: this.tipoCreate,
+        veicolo: null
+      },
+      {
+        width: '1100px',
+        maxWidth: '90vw',
+        height: 'auto',
+        maxHeight: '100v',
+        enterAnimationDuration: '500ms',
+        exitAnimationDuration: '500ms'
+      },
     )
   }
-  onSelected(row:any){
+  onSelected(row: any) {
     console.log(row);
-    let dialogRef = this.util.openDialog(SceltaUpdateDialog,null, {
+    let dialogRef = this.util.openDialog(SceltaUpdateDialog, null, {
       width: '400px',
       maxWidth: '90vw',
       height: 'auto',
-      maxHeight: '90v'
-    } );
+      maxHeight: '100v'
+    });
     dialogRef.afterClosed()
       .subscribe(r => {
-        if (r == 'upload'){
+        if (r == 'upload') {
           this.eseguoUpload(row);
-        } else {
+        } else  if (r == 'update'){
           this.eseguoUpdate(row);
         }
 
-      }) 
+      })
   }
-  eseguoUpdate(row:any){
-      console.log("eseguo l'update");
+  eseguoUpdate(row: any) {
+    console.log("eseguo l'update");
+    let dialogComponent: ComponentType<any>
+    if (row.tipoVeicolo.nome === 'macchina') dialogComponent = MacchinaDialog;
+    if (row.tipoVeicolo.nome === 'moto') dialogComponent = MotoDialog;
 
-      
+
+    let dialogRef = this.util.openDialog(dialogComponent,
+      {
+        mod: 'U',
+        tipoVeicolo: row.tipoVeicolo,
+        veicolo: row
+      },
+      {
+        width: '1100px',
+        maxWidth: '90vw',
+        height: 'auto',
+        maxHeight: '90v',
+        enterAnimationDuration: '500ms',
+        exitAnimationDuration: '500ms'
+      },
+    )
+
   }
 
-   eseguoUpload(row:any){
-      console.log("eseguo l'upload");
-      this.util.openDialog(UploadDialog,
-        {
-          veicolo:row
-        }
-      )
+  eseguoUpload(row: any) {
+    console.log("eseguo l'upload");
+    this.util.openDialog(UploadDialog,
+      {
+        veicolo: row
+      }
+    )
   }
 }
