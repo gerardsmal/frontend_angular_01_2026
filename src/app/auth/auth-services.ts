@@ -10,41 +10,44 @@ export class AuthServices {
   grant = signal({
     isAdmin: false,
     isLogged: false,
-    userId: null as string | null
+    userId: null as string | null,
+    mailValidate: null as string | null
   });
 
-
-
-constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-   if (isPlatformBrowser(this.platformId)) {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    if (isPlatformBrowser(this.platformId)) {
       console.log('restore---');
       const isLogged = localStorage.getItem("isLogged") === '1';
       const isAdmin = localStorage.getItem("isAdmin") === '1';
       const userId = localStorage.getItem("userId");
-     
+      const mailValidate = localStorage.getItem("mailValidate");
+
       this.grant.set({
         isAdmin,
         isLogged,
-        userId    
+        userId,
+        mailValidate,
       });
       console.log('[AuthService] constructor isLogged', this.grant().isLogged);
     }
- }
+  }
 
-   setAutentificated(userId: any) {
+  setAutentificated(userId: any, mailValidate: any) {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem("isLogged", "1");
       localStorage.setItem("userId", userId);
-     
+      localStorage.setItem("mailValidate", mailValidate);
+
       this.grant.set({
         isAdmin: false,
         isLogged: true,
         userId,
+        mailValidate,
       });
     }
     return EMPTY;
   }
-   setAdmin() {
+  setAdmin() {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem("isAdmin", "1");
       this.grant.update(grant => ({
@@ -55,7 +58,7 @@ constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     return EMPTY;
   }
 
-   setUser() {
+  setUser() {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem("isAdmin", "0");
       this.grant.update(grant => ({
@@ -71,16 +74,18 @@ constructor(@Inject(PLATFORM_ID) private platformId: Object) {
       localStorage.removeItem("isLogged");
       localStorage.removeItem("userId");
       localStorage.removeItem("userName");
+      localStorage.removeItem("mailValidate");
       this.grant.set({
         isAdmin: false,
         isLogged: false,
-        userId: null
+        userId: null,
+        mailValidate:null,
       })
     }
     return EMPTY;
   }
 
-   isAutentificated(): boolean {
+  isAutentificated(): boolean {
     return this.grant().isLogged;
   }
 

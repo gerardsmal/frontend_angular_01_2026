@@ -1,6 +1,15 @@
-import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
+//import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
+import {
+  LOCALE_ID,
+  NgModule,
+  provideBrowserGlobalErrorListeners,
+  provideZonelessChangeDetection,
+} from '@angular/core';
 import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+
+import { registerLocaleData } from '@angular/common';
+import localeIt from '@angular/common/locales/it';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -21,6 +30,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
@@ -39,6 +49,11 @@ import { SceltaUpdateDialog } from './dialogs/scelta-update-dialog/scelta-update
 import { UploadDialog } from './dialogs/upload-dialog/upload-dialog';
 import { MotoDialog } from './dialogs/moto-dialog/moto-dialog';
 import { BiciDialog } from './dialogs/bici-dialog/bici-dialog';
+import { UtenteDialog } from './dialogs/utente-dialog/utente-dialog';
+import { EmailValidation } from './componenti/email-validation/email-validation';
+import { ResetPassword } from './componenti/reset-password/reset-password';
+
+registerLocaleData(localeIt);
 
 @NgModule({
   declarations: [
@@ -57,7 +72,9 @@ import { BiciDialog } from './dialogs/bici-dialog/bici-dialog';
     UploadDialog,
     MotoDialog,
     BiciDialog,
-
+    UtenteDialog,
+    EmailValidation,
+    ResetPassword,
   ],
   imports: [
     BrowserModule,
@@ -82,11 +99,14 @@ import { BiciDialog } from './dialogs/bici-dialog/bici-dialog';
     MatBadgeModule,
     MatButtonToggleModule,
     MatExpansionModule,
+    MatCheckboxModule,
   ],
   providers: [
     provideHttpClient(withFetch()),
     provideBrowserGlobalErrorListeners(),
     provideClientHydration(withEventReplay()),
+    provideZonelessChangeDetection(),
+    { provide: LOCALE_ID, useValue: 'it-IT' },
   ],
   bootstrap: [App],
 })

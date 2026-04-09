@@ -25,12 +25,30 @@ export class UtenteServices {
   changePwd(body: {}) {
     return this.http.put(this.url + "changePwd", body);
   }
+  sendValidationMail(id: string) {
+    let params = new HttpParams().set("id", id);
+    return this.http.get(this.url + "sendValidation", { params })
+  }
+
+  sendResetPassword(id: string) {
+    let params = new HttpParams().set("id", id);
+    return this.http.get(this.url + "sendResetPassword", { params })
+  }
+
+   resetPassword(body: {}) {
+    return this.http.put(this.url + "resetPassword", body);
+  }
+  mailValidate(id: string) {
+    let params = new HttpParams().set("id", id);
+    return this.http.get(this.url + "emailValidate", { params })
+  }
+
 
   findByUserName(id: string) {
     const params = new HttpParams().set("id", id);
     return this.http.get(this.url + "findByUserName", { params });
   }
-  
+
   list(userName?: string, nome?: string, cognome?: string, role?: string) {
     let params = new HttpParams();
     if (nome) params = params.set('nome', nome);

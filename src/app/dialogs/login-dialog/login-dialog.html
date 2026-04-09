@@ -20,6 +20,7 @@
                 <button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid">Login</button>
                 <button type="button" class="btn btn-secondary" (click)="registrazione()"
                     matTooltip="Nuovo utente? Registrati.">Nuovo utente</button>
+                <mat-checkbox (change)="onResendChange($event)">Password dimenticato</mat-checkbox>    
             </div>
 
         </form>

@@ -7,6 +7,8 @@ import { authAutentificatedGuard } from './auth/auth-autentificated-guard';
 import { authAdminGuard } from './auth/auth-admin-guard';
 import { Chart } from './componenti/chart/chart';
 import { VeicoliManager } from './componenti/veicoli-manager/veicoli-manager';
+import { EmailValidation } from './componenti/email-validation/email-validation';
+import { ResetPassword } from './componenti/reset-password/reset-password';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dash', pathMatch: 'full' },
@@ -16,8 +18,9 @@ const routes: Routes = [
       { path: 'cart', component: Chart  , canActivate: [authAutentificatedGuard]},
       { path: 'veicoli', component: VeicoliManager, canActivate: [authAutentificatedGuard, authAdminGuard] },
       { path: 'user', component: GestioneUtente, canActivate: [authAutentificatedGuard, authAdminGuard] }
-    ]
-  },
+    ]},
+  { path: 'emailValidation/:id' , component: EmailValidation},
+  { path: 'resetPassword/:id' , component: ResetPassword},
 ];
 
 @NgModule({

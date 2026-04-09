@@ -1,68 +1,76 @@
 <mat-toolbar>
+  @if (auth.grant().isLogged){
+
   <button matIconButton [matMenuTriggerFor]="menu" class="example-icon" aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
   </button>
-   <mat-menu #menu="matMenu">
-    <button mat-menu-item  (click)="changePWD()">
-      <mat-icon>password</mat-icon>
-      <span>Cambio password</span>
-    </button>
-    <button mat-menu-item  (click)="profile()">
-      <mat-icon>person</mat-icon>
-      <span>Profile</span>
-    </button>
-  </mat-menu>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="changePWD()">
+        <mat-icon>password</mat-icon>
+        <span>Cambio password</span>
+      </button>
+      <button mat-menu-item (click)="profile()">
+        <mat-icon>person</mat-icon>
+        <span>Profile</span>
+      </button>
+    </mat-menu>
+  }
   <span>Vendita veicoli</span>
-  
-
 
   @if (auth.grant().userId) {
 
-    <div class="user-info">
-      <span class="welcome">Ciao {{ auth.grant().userId }}</span>
-    </div>
+  <div class="user-info">
+    <span class="welcome">Ciao {{ auth.grant().userId }}</span>
+    @if (auth.grant().mailValidate === 'N'){
+    <mat-card class="warning-card">
+      Mail non validata.
+      <mat-checkbox (change)="onResendChange($event)">Resend mail</mat-checkbox>
+      @if (loading()){
+         <mat-spinner diameter="30"></mat-spinner>
+      }  
+    </mat-card>
+    }
+
+
+  </div>
   }
-    <span class="example-spacer"></span>
-  
-    <button mat-icon-button
-        class="example-icon" aria-label="Home page" matTooltip="Home Page"
-        [routerLink]="['/dash','home']">
+  <span class="example-spacer"></span>
 
-  <mat-icon>home</mat-icon>
-</button>
-  
-@if (auth.grant().isLogged){
-    <div class="icon-with-label" 
-        matTooltip="Gestione del Carrello" 
-        [routerLink]="['/dash','cart']">
+  <button mat-icon-button class="example-icon" aria-label="Home page" matTooltip="Home Page"
+    [routerLink]="['/dash','home']">
 
-    <button mat-icon-button aria-label="Carrello" matBadge="4">
+    <mat-icon>home</mat-icon>
+  </button>
+
+  @if (auth.grant().isLogged){
+  <div class="icon-with-label" matTooltip="Gestione del Carrello" [routerLink]="['/dash','cart']">
+
+    <button mat-icon-button aria-label="Carrello" matBadge="0">
       <img src="cart.svg" class="menu-icon-img" />
     </button>
-    </div>
+  </div>
   }
-   <button matIconButton class="example-icon" 
-    matTooltip="credentziale per l'applicazione"
-    (click)="login()">
+  <button matIconButton class="example-icon" matTooltip="credentziale per l'applicazione" (click)="login()">
     <mat-icon>login</mat-icon>
   </button>
-  <button matIconButton class="example-icon" aria-label="uscire dell'applicazione" 
-    matTooltip="Uscire dell'applicazione"
+  <button matIconButton class="example-icon" aria-label="uscire dell'applicazione" matTooltip="Uscire dell'applicazione"
     (click)="logout()">
     <mat-icon>logout</mat-icon>
   </button>
 </mat-toolbar>
 <mat-drawer-container class="example-container">
-    <mat-drawer mode="side" [opened]=auth.isRoleAdmin() class="side-menu"> 
-        <mat-list role="list">
-            <mat-list-item role="listitem" routerLink="/dash/home" [routerLinkActive]="'active'">Home</mat-list-item>
-        @if (auth.grant().isAdmin){
-            <mat-list-item role="listitem" routerLink="/dash/veicoli" [routerLinkActive]="'active'">Gestione veicoli</mat-list-item>
-            <mat-list-item role="listitem" routerLink="/dash/user" [routerLinkActive]="'active'">Gestione utente</mat-list-item>
-        }    
-        </mat-list>
-    </mat-drawer>
-    <mat-drawer-content>
-        <router-outlet></router-outlet>
-    </mat-drawer-content>
+  <mat-drawer mode="side" [opened]=auth.isRoleAdmin() class="side-menu">
+    <mat-list role="list">
+      <mat-list-item role="listitem" routerLink="/dash/home" [routerLinkActive]="'active'">Home</mat-list-item>
+      @if (auth.grant().isAdmin){
+      <mat-list-item role="listitem" routerLink="/dash/veicoli" [routerLinkActive]="'active'">Gestione
+        veicoli</mat-list-item>
+      <mat-list-item role="listitem" routerLink="/dash/user" [routerLinkActive]="'active'">Gestione
+        utente</mat-list-item>
+      }
+    </mat-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
 </mat-drawer-container>

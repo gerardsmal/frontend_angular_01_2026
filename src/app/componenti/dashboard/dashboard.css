@@ -47,3 +47,9 @@ button mat-icon {
 .logo {
     width: 5%;
 }
+.warning-card {
+  display: inline-block;
+  background-color: #bfdcf674;
+  color: black;
+  padding: 8px 12px;
+}

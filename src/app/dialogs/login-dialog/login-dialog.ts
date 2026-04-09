@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Utilities } from '../../services/utilities';
 import { NgForm } from '@angular/forms';
 import { RegistrazioneDialog } from '../registrazione-dialog/registrazione-dialog';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-login-dialog',
@@ -16,7 +17,7 @@ import { RegistrazioneDialog } from '../registrazione-dialog/registrazione-dialo
 export class LoginDialog {
  msg = signal('');
   readonly dialog = inject(MatDialog);
-
+  userName="";
   constructor(
     private account: UtenteServices,
     private auth: AuthServices,
@@ -33,7 +34,7 @@ export class LoginDialog {
       next: (resp: any) => {
         this.msg.set("");
         console.log(resp)
-        this.auth.setAutentificated(resp.id);
+        this.auth.setAutentificated(resp.id, resp.mailValidate ? 'Y' : 'N');
         if (resp.role == 'ADMIN') this.auth.setAdmin();
         if (resp.role == 'USER') this.auth.setUser();
 
@@ -46,6 +47,7 @@ export class LoginDialog {
       error: (resp: any) => {
         console.log(resp);
         this.msg.set(resp.error.msg);
+        this.userName = signin.form.value.userName;
       }
     });
   }
@@ -67,6 +69,19 @@ export class LoginDialog {
    
   }
 
+onResendChange(e: MatCheckboxChange) {
+    if (e.checked){
+      this.account.sendResetPassword(this.userName)
+        .subscribe({
+          next:((r:any) => {
+            e.source.checked = false;
+          }),
+          error:((r:any) => {
+            console.log("error:" + r.error.msg)
+          })
+        })
 
-
+    }
+      
+  }
 }

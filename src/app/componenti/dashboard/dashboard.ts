@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { AuthServices } from '../../auth/auth-services';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,6 +7,7 @@ import { ChangePassword } from '../../dialogs/change-password/change-password';
 import { UtenteServices } from '../../services/utente-services';
 import { Utilities } from '../../services/utilities';
 import { RegistrazioneDialog } from '../../dialogs/registrazione-dialog/registrazione-dialog';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,16 +17,38 @@ import { RegistrazioneDialog } from '../../dialogs/registrazione-dialog/registra
 })
 export class Dashboard {
   readonly dialog = inject(MatDialog);
+  loading = signal(false);
 
-   constructor(public auth:AuthServices,
-      private routing:Router,
-      private utenteServices: UtenteServices,
-      private util : Utilities
-   ){}
-  
+  constructor(public auth: AuthServices,
+    private routing: Router,
+    private utenteServices: UtenteServices,
+    private util: Utilities
+  ) { }
+
+  onResendChange(e: MatCheckboxChange) {
+    if (e.checked){
+      this.loading.set(true);
+      this.utenteServices.sendValidationMail(this.auth.grant().userId)
+        .subscribe({
+          next:((r:any) => {
+            this.loading.set(false)
+            e.source.checked = false;
+          }),
+          error:((r:any) => {
+            this.loading.set(false)
+            console.log("error:" + r.error.msg)
+          })
+        })
+
+
+    }
+      
+
+  }
+
   login() {
     this.dialog.open(LoginDialog, {
-      width: '400px',
+      width: '500px',
       disableClose: false,
       data: {}
     });
@@ -36,15 +59,15 @@ export class Dashboard {
     this.auth.resetAll();
     this.routing.navigate(['/dash']);
   }
-  changePWD(){
-     this.dialog.open(ChangePassword, {
+  changePWD() {
+    this.dialog.open(ChangePassword, {
       width: '400px',
       disableClose: false,
       data: {}
     });
   }
 
-   profile() {
+  profile() {
     this.utenteServices.findByUserName(this.auth.grant().userId)
       .subscribe({
         next: ((r: any) => {
